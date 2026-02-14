@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Harini Akka</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soft-pink: #ffe4e1;
+            --deep-pink: #ffafbd;
+            --accent-pink: #ff6b81;
+            --white-glow: rgba(255, 255, 255, 0.9);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
+            background: linear-gradient(180deg, #ffafbd 0%, #ffc3a0 100%);
+            font-family: 'Quicksand', sans-serif; color: #5d5d5d;
+            overflow-x: hidden; display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* --- LOADING BOW SCREEN --- */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--soft-pink); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1000;
+            transition: opacity 1s ease-out; cursor: pointer;
+        }
+        .bow { font-size: 100px; animation: heartbeat 1.5s infinite; }
+        .click-text { 
+            margin-top: 20px; font-family: 'Dancing Script', cursive; 
+            color: var(--accent-pink); font-size: 1.5rem; 
+        }
+
+        /* --- PHOTO FRAME --- */
+        .photo-container {
+            width: 180px; height: 180px; border-radius: 50%;
+            border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto 20px; overflow: hidden; background: #eee;
+        }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- CONTENT STYLING --- */
+        .container {
+            width: 90%; max-width: 600px; background: var(--white-glow);
+            padding: 40px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center; position: relative; z-index: 10;
+            backdrop-filter: blur(10px); border: 2px solid white; margin: 40px 0;
+            opacity: 0; transform: translateY(20px); transition: all 1s ease;
+        }
+        .container.show { opacity: 1; transform: translateY(0); }
+
+        h1 { font-family: 'Dancing Script', cursive; color: var(--accent-pink); font-size: 2.5rem; margin: 10px 0; }
+        p { line-height: 1.8; font-size: 1.1rem; margin-bottom: 20px; white-space: pre-line; }
+
+        /* --- ANIMATIONS --- */
+        .heart { position: fixed; bottom: -10%; color: pink; animation: floatUp linear forwards; z-index: 1; }
+        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        
+        .burst-heart { position: fixed; pointer-events: none; z-index: 100; animation: burst 1s ease-out forwards; }
+        @keyframes burst {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen" onclick="startSurprise()">
+        <div class="bow">🎀</div>
+        <div class="click-text">Tap the bow for a surprise...</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="mainContent">
+        <div class="photo-container">
+            <img src="akka.jpg" alt="Harini Akka">
+        </div>
+
+        <h1>For My Harini Akka</h1>
+        <p>
+            My <strong>thangoo chellow Harini Akka</strong>, it's been 1 year since I met you. To be honest, you were the first girl who was jovial with other girls. Until then, I thought that girls always prefer boys' friendship and they won't like other girls to be their friends, but u proved me wrong. 
+            
+            Seeing you was my biggest inspiration akka....
+        </p>
+        <p>
+            The love and the care which you gave is never comparable to anyone akka... 
+            You were always the most unique person I have ever met in my life...
+        </p>
+        <p>
+            Akka i remember you were always there with me in my sadness as well as happiness. No matter what, I used to first run to you for everything...
+        </p>
+        <p>
+            Those laughter, those midnight talks, those tears, those caring and loving moments are carved in my memory.
+        </p>
+        <p>
+            Maybe this Valentine I don't have a boyfriend, but you are here for me akka... Thank you so much.
+        </p>
+        <h1 style="font-size: 2rem;">HAPPY VALENTINE'S DAY HARINI AKKA</h1>
+        <div style="font-size: 30px;">🎀💖✨</div>
+    </div>
+
+    <script>
+        function startSurprise() {
+            // 1. Play Music
+            const music = document.getElementById('bgMusic');
+            music.play();
+
+            // 2. Hide Loader
+            const loader = document.getElementById('loading-screen');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                // 3. Show Content
+                document.getElementById('mainContent').classList.add('show');
+                // 4. Burst Hearts
+                createBurst();
+            }, 1000);
+
+            // 5. Start continuous floating hearts
+            setInterval(createFloatingHeart, 400);
+        }
+
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['💗','💖','🌸','🎀'][Math.floor(Math.random() * 4)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        function createBurst() {
+            for(let i=0; i<40; i++) {
+                const b = document.createElement('div');
+                b.classList.add('burst-heart');
+                b.innerHTML = '💖';
+                b.style.left = '50vw';
+                b.style.top = '50vh';
+                b.style.setProperty('--tx', (Math.random() - 0.5) * 600 + 'px');
+                b.style.setProperty('--ty', (Math.random() - 0.5) * 600 + 'px');
+                document.body.appendChild(b);
+                setTimeout(() => b.remove(), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
